@@ -56,35 +56,37 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Wrap(
-        children: [
-          FutureBuilder<void>(
-            future: _initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return CameraPreview(_controller);
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(top: 50),
-              child: ElevatedButton(
-                onPressed: () {
-                  SimplePip()
-                      .enterPipMode(aspectRatio: [3, 2], autoEnter: false);
-                },
-                child: const Text("Float Mode",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold)),
-              ),
+      body: SafeArea(
+        child: Wrap(
+          children: [
+            FutureBuilder<void>(
+              future: _initializeControllerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return CameraPreview(_controller);
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
             ),
-          )
-        ],
+            Center(
+              child: Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: ElevatedButton(
+                  onPressed: () {
+                    SimplePip()
+                        .enterPipMode(aspectRatio: [3, 2], autoEnter: false);
+                  },
+                  child: const Text("Float Mode",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold)),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
 
       // floatingActionButton: FloatingActionButton(
